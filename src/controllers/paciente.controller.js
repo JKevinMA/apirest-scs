@@ -28,4 +28,32 @@ function registrarPaciente(req,res){
     })
 }
 
-module.exports = {registrarPaciente};
+function obtenerPaciente(req,res){
+    mysqlConnection.query('SELECT * FROM persona WHERE dni = ? ',[req.params.dni],(err,rows,fields)=>{
+        if(!err){
+            res.json({status:"success",res:rows});
+        }else{
+            console.log(err);
+            res.json({status:"error",message:err});
+        }
+    })
+}
+
+function registrarHistoriaClinica(req,res){
+    const { Persona,Enfermedad,Alergeno,Pulso,Saturacion } = req.body;
+    mysqlConnection.query('UPDATE paciente SET Enfermedad = ?,Alergeno = ?,Pulso = ?,Saturacion = ? WHERE Persona_idPersona = ?',[Enfermedad,Alergeno,Pulso,Saturacion,Persona.idPersona],(err,rows,fields)=>{
+        if(!err){
+            if(rows.affectedRows>0){
+                /* res.json({status:"success",res:{id:rows.insertId}}); */
+                res.json({status:"success",res:{filasAfectadas:rows.affectedRows}});
+            }else{
+                res.json({status:"error",message:"No se registró correctamente"});
+            }
+        }else{
+            console.log(err);
+            res.json({status:"error",message:err.sqlMessage});
+        }
+    })
+}
+
+module.exports = {registrarPaciente,obtenerPaciente,registrarHistoriaClinica};

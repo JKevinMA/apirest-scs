@@ -18,6 +18,8 @@ app.use('/personal-medico',require('./routes/personal-medico'));
 app.use('/horarios',require('./routes/horarios'));
 app.use('/roles',require('./routes/roles'));
 app.use('/pacientes',require('./routes/pacientes'));
+app.use('/medicos',require('./routes/medicos'));
+app.use('/citas-medicas',require('./routes/citas-medicas'));
 
 
 app.listen(app.get('port'),()=>{
