@@ -7,7 +7,7 @@ function loginUsuario(req,res){
             if(!rows[0]){
                 res.json({status:"error",message:"Usuario no existe."});
             }else{
-                mysqlConnection.query('SELECT p.Nombre,r.Descripcion as Rol FROM personalmedico pm INNER JOIN persona p ON pm.Persona_idPersona = p.idPersona INNER JOIN rol r ON pm.Rol_idRol = r.idRol WHERE pm.Usuario =? and pm.Contraseña = ?',[usuario,contrasena],(err,rows,fields)=>{
+                mysqlConnection.query('SELECT p.Nombre,r.Descripcion as Rol,Persona_idPersona FROM personalmedico pm INNER JOIN persona p ON pm.Persona_idPersona = p.idPersona INNER JOIN rol r ON pm.Rol_idRol = r.idRol WHERE pm.Usuario =? and pm.Contraseña = ?',[usuario,contrasena],(err,rows,fields)=>{
                     if(!err){
                         if(!rows[0]){
                             res.json({status:"error",message:"Contraseña incorrecta."});
