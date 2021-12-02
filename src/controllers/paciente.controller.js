@@ -40,6 +40,18 @@ function obtenerPaciente(req,res){
     })
 }
 
+function obtenerPacientes(req,res){
+    mysqlConnection.query("SELECT pe.*,pa.Peso,pa.Estatura,pa.Saturacion,pa.Pulso,ifnull(pa.Alergeno,'-') as Alergeno,ifnull(pa.Enfermedad,'-') as Enfermedad, pa.TosPersistente, pa.PresionPecho,pa.SilbidoPecho,pa.DificultadRespirar FROM persona pe INNER JOIN paciente pa ON pa.Persona_idPersona = pe.idPersona ",[],(err,rows,fields)=>{
+        if(!err){
+            res.json({status:"success",res:rows});
+            console.log(rows);
+        }else{
+            console.log(err);
+            res.json({status:"error",message:err});
+        }
+    })
+}
+
 function registrarHistoriaClinica(req,res){
     const { Persona,Enfermedad,Alergeno,Pulso,Saturacion } = req.body;
     mysqlConnection.query('UPDATE paciente SET Enfermedad = ?,Alergeno = ?,Pulso = ?,Saturacion = ? WHERE Persona_idPersona = ?',[Enfermedad,Alergeno,Pulso,Saturacion,Persona.idPersona],(err,rows,fields)=>{
@@ -89,4 +101,4 @@ function registrarAtencionMedica_2(req,res){
         }
     })
 }
-module.exports = {registrarPaciente,obtenerPaciente,registrarHistoriaClinica,registrarAtencionMedica,registrarAtencionMedica_2};
+module.exports = {registrarPaciente,obtenerPaciente,registrarHistoriaClinica,registrarAtencionMedica,registrarAtencionMedica_2,obtenerPacientes};

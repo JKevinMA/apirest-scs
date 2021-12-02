@@ -1,8 +1,8 @@
 const mysqlConnection = require('../database');
 
-function registrarCitaMedica(req,res){
-    const { Paciente_Persona_idPersona,Fecha,Hora} = req.body;
-    mysqlConnection.query('INSERT INTO citamedica (Paciente_Persona_idPersona,Fecha,Hora) VALUES (?,?,?)',[Paciente_Persona_idPersona,Fecha,Hora],(err,rows,fields)=>{
+function registrarDiagnostico(req,res){
+    const { Indice_Predictivo,Medico_idPersona,Paciente_idPersona} = req.body;
+    mysqlConnection.query('INSERT INTO diagnostico (Indice_Predictivo,Fecha,Medico_idPersona,Paciente_idPersona) VALUES (?,now(),?,?)',[Indice_Predictivo,Medico_idPersona,Paciente_idPersona],(err,rows,fields)=>{
         if(!err){
             if(rows.affectedRows>0){
                 /* res.json({status:"success",res:{id:rows.insertId}}); */
@@ -16,8 +16,8 @@ function registrarCitaMedica(req,res){
         }
     })
 }
-function obtenerCitasMedicas(req,res){
-    mysqlConnection.query("SELECT pe.*,cm.Fecha,cm.Hora FROM citamedica cm INNER JOIN persona pe ON pe.idPersona = cm.Paciente_Persona_idPersona ",[],(err,rows,fields)=>{
+function obtenerIdentificaciones(req,res){
+    /* mysqlConnection.query("SELECT pe.*,cm.Fecha,cm.Hora FROM citamedica cm INNER JOIN persona pe ON pe.idPersona = cm.Paciente_Persona_idPersona ",[],(err,rows,fields)=>{
         if(!err){
             res.json({status:"success",res:rows});
             console.log(rows);
@@ -25,6 +25,6 @@ function obtenerCitasMedicas(req,res){
             console.log(err);
             res.json({status:"error",message:err});
         }
-    })
+    }) */
 }
-module.exports = {registrarCitaMedica,obtenerCitasMedicas};
+module.exports = {registrarDiagnostico,obtenerIdentificaciones};

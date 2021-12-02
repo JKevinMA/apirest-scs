@@ -20,7 +20,7 @@ app.use('/roles',require('./routes/roles'));
 app.use('/pacientes',require('./routes/pacientes'));
 app.use('/medicos',require('./routes/medicos'));
 app.use('/citas-medicas',require('./routes/citas-medicas'));
-
+app.use('/diagnosticos',require('./routes/diagnosticos'));
 
 app.listen(app.get('port'),()=>{
     console.log('Server on port',app.get('port'));

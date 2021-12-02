@@ -27,5 +27,15 @@ function registrarPersonalMedico(req,res){
         }
     })
 }
-
-module.exports = {registrarPersonalMedico};
+function obtenerPersonalMedico(req,res){
+    mysqlConnection.query("SELECT pe.*,pm.correo,pm.usuario,pm.contraseña as contrasena,r.Descripcion as rol FROM persona pe INNER JOIN personalmedico pm ON pm.Persona_idPersona = pe.idPersona INNER JOIN rol r ON pm.Rol_idRol = r.idRol ",[],(err,rows,fields)=>{
+        if(!err){
+            res.json({status:"success",res:rows});
+            console.log(rows);
+        }else{
+            console.log(err);
+            res.json({status:"error",message:err});
+        }
+    })
+}
+module.exports = {registrarPersonalMedico,obtenerPersonalMedico};
