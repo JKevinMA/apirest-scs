@@ -17,7 +17,7 @@ function registrarCitaMedica(req,res){
     })
 }
 function obtenerCitasMedicas(req,res){
-    mysqlConnection.query("SELECT pe.*,cm.Fecha,cm.Hora FROM citamedica cm INNER JOIN persona pe ON pe.idPersona = cm.Paciente_Persona_idPersona ",[],(err,rows,fields)=>{
+    mysqlConnection.query("SELECT pe.*,cm.Fecha,cm.Hora,IFNULL(cm.Asistencia,'--') as Asistencia FROM citamedica cm INNER JOIN persona pe ON pe.idPersona = cm.Paciente_Persona_idPersona ",[],(err,rows,fields)=>{
         if(!err){
             res.json({status:"success",res:rows});
             console.log(rows);
